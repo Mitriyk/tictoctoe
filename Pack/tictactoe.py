@@ -20,7 +20,9 @@ class TicTacToeBoard():
     def step(self, target):
         if self.stepCheck(target):
             self._board[target - 1] = self.first_player
+            self.winCheck()
             self.playerChange()
+
         else:
             print('Место занято - выбери другое!')
         self.boardPrint()
@@ -37,7 +39,7 @@ class TicTacToeBoard():
                 or x[3] == 'X' and x[4] == 'X' and x[5] == 'X'
                 or x[6] == 'X' and x[7] == 'X' and x[8] == 'X'
         ):
-            print('\nWin X ', end='')
+            print(f'\nWin {self.first_player} ', end='')
             return True
         else:
             return False
@@ -63,9 +65,9 @@ def main():
     while True:
         target = ttt_board.input_check()
         ttt_board.step(target)
-        if ttt_board.winCheck():
-            print('Game over')
-            break
+        # if ttt_board.winCheck():
+        #     print('Game over')
+        #     break
         if ttt_board.boardCheckNotFinish():
             print()
             print('Нет свободных мест на поле')
