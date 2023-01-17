@@ -13,6 +13,7 @@ class TicTacToeBoard():
             print(self._board[i], sep='', end='  ')
             if i == 2 or i == 5:
                 print()
+        print()
 
     def boardCheckNotFinish(self) -> bool:
         return all(c == 'X' or c == 'O' for c in self._board)
@@ -20,8 +21,7 @@ class TicTacToeBoard():
     def step(self, target):
         if self.stepCheck(target):
             self._board[target - 1] = self.first_player
-            self.winCheck()
-            self.playerChange()
+
 
         else:
             print('Место занято - выбери другое!')
@@ -34,12 +34,22 @@ class TicTacToeBoard():
             return False
 
     def winCheck(self) -> bool:
-        x = self._board
-        if (x[0] == 'X' and x[1] == 'X' and x[2] == 'X'
-                or x[3] == 'X' and x[4] == 'X' and x[5] == 'X'
-                or x[6] == 'X' and x[7] == 'X' and x[8] == 'X'
+        b = self._board
+        if (b[0] == 'X' and b[1] == 'X' and b[2] == 'X' or
+                b[3] == 'X' and b[4] == 'X' and b[5] == 'X' or
+                b[6] == 'X' and b[7] == 'X' and b[8] == 'X' or
+                b[0] == 'X' and b[0] == 'X' and b[8] == 'X' or
+                b[2] == 'X' and b[4] == 'X' and b[6] == 'X'
         ):
-            print(f'\nWin {self.first_player} ', end='')
+            print(f'\nWin {self.first_player} ')
+            return True
+        elif (b[0] == 'O' and b[1] == 'O' and b[2] == 'O' or
+              b[3] == 'O' and b[4] == 'O' and b[5] == 'O' or
+              b[6] == 'O' and b[7] == 'O' and b[8] == 'O' or
+              b[0] == 'O' and b[0] == 'O' and b[8] == 'O' or
+              b[2] == 'O' and b[4] == 'O' and b[6] == 'O'
+        ):
+            print(f'\nWin {self.first_player} ')
             return True
         else:
             return False
@@ -58,6 +68,7 @@ class TicTacToeBoard():
             else:
                 print(f'Вы ввели {target}.\nВведите число в диапазоне 1-9')
 
+
 def main():
     ttt_board = TicTacToeBoard()
     ttt_board.boardPrint()
@@ -65,9 +76,10 @@ def main():
     while True:
         target = ttt_board.input_check()
         ttt_board.step(target)
-        # if ttt_board.winCheck():
-        #     print('Game over')
-        #     break
+        if ttt_board.winCheck():
+            break
+
+        ttt_board.playerChange()
         if ttt_board.boardCheckNotFinish():
             print()
             print('Нет свободных мест на поле')
