@@ -15,9 +15,9 @@ class TicTacToeBoard():
                 print()
 
     def boardCheckNotFinish(self) -> bool:
-        return all(c == 'X' or c == 'O' for c in self._board )
+        return all(c == 'X' or c == 'O' for c in self._board)
 
-    def step(self, player, target):
+    def step(self, target):
         if self.stepCheck(target):
             self._board[target - 1] = self.first_player
             self.playerChange()
@@ -48,22 +48,24 @@ class TicTacToeBoard():
         elif self.first_player == 'O':
             self.first_player = 'X'
 
+    def input_check(self):
+        while True:
+            target = int(input(f'\nХодит {self.first_player} (1-9): '))
+            if 1 <= target <= 9:
+                return target
+            else:
+                print(f'Вы ввели {target}.\nВведите число в диапазоне 1-9')
 
 def main():
-    cell_index = (0, 1, 2, 3, 4, 5, 6, 7, 8)
-    X, O, BLANCK = 'X', 'o', '-'
-    PLAYERFIRST = 'X'
     ttt_board = TicTacToeBoard()
     ttt_board.boardPrint()
     print('\nПервым ходит Х')
     while True:
-        target = int(input(f'\nХодит {ttt_board.first_player} (1-9): '))
-        ttt_board.step(PLAYERFIRST, target)
-
+        target = ttt_board.input_check()
+        ttt_board.step(target)
         if ttt_board.winCheck():
             print('Game over')
             break
-
         if ttt_board.boardCheckNotFinish():
             print()
             print('Нет свободных мест на поле')
