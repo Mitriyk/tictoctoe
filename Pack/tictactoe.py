@@ -76,7 +76,7 @@ def main():
         # ttt_board.player_change()
         if board.board_check_not_finish():
             print()
-            print('Нет свободных мест на поле')
+            print('Нет свободных мест на поле - Ничья')
             break
 
 
